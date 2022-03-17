@@ -30,7 +30,7 @@ app.post("/upload", upload, (req, res) => {
     let arr = file.originalname.split(".");
     const fileType = arr[arr.length - 1];
     console.log(fileType);
-
+    //where to save and how to save
     params = {
       Bucket: process.env.AWS_BUCKET_NAME,
       Key: `${uuidv4()}.${fileType}`,
