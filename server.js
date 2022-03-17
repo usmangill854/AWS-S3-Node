@@ -32,6 +32,8 @@ const storage = multer.memoryStorage({
 const upload = multer({ storage }).single("image");
 
 app.post("/upload", upload, (req, res) => {
+    let ResponseData = [];
+    const files = req.file
   let myFile = req.file.originalname.split(".");
   const fileType = myFile[myFile.length - 1];
 
@@ -47,7 +49,14 @@ app.post("/upload", upload, (req, res) => {
   s3.upload(params, (error, data) => {
     if (error) {
       res.status(500).send(error);
+    }else{
+        ResponseData.push(data)
+        if(ResponseData.length == files.length){
+            res.json({data:ResponseData,msg:'file uploaad successfullz'})
+        }
     }
+
+
 
     res.status(200).send(data);
   });
